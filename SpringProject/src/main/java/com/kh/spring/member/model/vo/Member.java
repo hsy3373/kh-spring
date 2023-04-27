@@ -38,7 +38,14 @@ import lombok.ToString;
 //@ToString // toString
 //@EqualsAndHashCode // equals, hashcode 자동생성
 
-@Data // Generates getters for all fields, a useful toString method, and hashCode and equals implementations
+//@Data // Generates getters for all fields, a useful toString method, and hashCode and equals implementations
+
+//@Setter // setter 의미
+//@Getter // getter 의미
+//@ToString // toString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder // 빌더 패턴을 좀 더 쉽게 사용가능
 public class Member {
 	

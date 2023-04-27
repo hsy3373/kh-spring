@@ -15,12 +15,26 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
+
+	<!-- 
+		주소 자동완성 도구
+		매번 같은 주소(/WEB-INF/views/)를 추가해야 하기 때문에 자동완성이 기본적으로 등록되어있다
+		- view resolver라는 도구를 등록(spring에서 제공)
+		- class : InternalResourceViewResolver
+		- prefix : 접두어 / suffix : 접미어
+		- retrun할 파일명을 제시하는 부분에 접두어, 접미어를 붙여서 forward하겠다는 뜻
+	 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
+	<!-- 
+		base-pakage에 등록된 패키지와 그 하위 패키지 모두 감시(scan)해서 
+		빈으로 등록가능한 클래스들은 spring-bean으로 등록해두는 역할
+	 -->
 	<context:component-scan base-package="com.kh.spring" />
 	
 	

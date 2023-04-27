@@ -91,6 +91,7 @@
 	 
 	 <!-- 
 	 	property => setter를 통해 값을 주입한다는 뜻
+	 			 => name 속성값을 필드값으로 하여 setter를 불러 value 속성값을 넣어준다
 	 	constructor-arg => 매개변수 있는 생성자를 통해 값을 주입한다는 뜻
 	 	
 	 	==> bean : 생성자로 객체를 만들겠다는 뜻 
