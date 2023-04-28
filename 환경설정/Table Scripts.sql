@@ -41,7 +41,7 @@ CREATE TABLE MEMBER (
 CREATE SEQUENCE SEQ_UNO NOCACHE;
 
 INSERT INTO MEMBER 
-VALUES (SEQ_UNO.NEXTVAL, 'admin', '1234', 'ê´€ë¦¬ìž', '010-1111-2222', 'ì„œìš¸íŠ¹ë³„ì‹œ', DEFAULT, DEFAULT, ,'' DEFAULT);
+VALUES (SEQ_UNO.NEXTVAL, 'admin', '1234', '°ü¸®ÀÚ', '010-1111-2222', '¼­¿ïÆ¯º°½Ã', DEFAULT, DEFAULT, ,'' DEFAULT);
 
 ----------------------------------------------------
 -------------------- BOARD ????  --------------------
@@ -53,10 +53,10 @@ CREATE TABLE BOARD_TYPE(
 );
 
 INSERT INTO BOARD_TYPE
-VALUES('N','ì¼ë°˜ê²Œì‹œíŒ');
+VALUES('N','ÀÏ¹Ý°Ô½ÃÆÇ');
 
 INSERT INTO BOARD_TYPE
-VALUES('P','ì‚¬ì§„ê²Œì‹œíŒ');
+VALUES('P','»çÁø°Ô½ÃÆÇ');
 
 CREATE TABLE BOARD(
   BOARD_NO NUMBER PRIMARY KEY,

@@ -19,6 +19,8 @@ public interface MemberService {
 	
 	public abstract Member loginMember(Member inputMember);
 	
+	public abstract int insertMember(Member inputMember);
+	
 	
 
 }
