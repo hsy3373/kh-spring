@@ -41,4 +41,11 @@
 				DEFAULT
 				)
 	</insert>
+	
+	
+	<select id="selectAll" resultType="member">
+		SELECT *
+		FROM MEMBER
+		WHERE STATUS = 'Y'
+	</select>
 </mapper>

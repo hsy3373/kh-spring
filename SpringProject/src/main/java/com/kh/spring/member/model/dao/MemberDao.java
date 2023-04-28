@@ -1,6 +1,7 @@
 package com.kh.spring.member.model.dao;
 
-import org.apache.ibatis.session.SqlSession;
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,10 @@ public class MemberDao {
 	
 	public int insertMember(Member inputMember) {
 		return sqlSession.insert("memberMapper.insertMember", inputMember);
+	}
+	
+	public ArrayList<Member> selectAll(){
+		return (ArrayList) sqlSession.selectList("memberMapper.selectAll");
 	}
 
 }
