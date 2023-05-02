@@ -16,7 +16,7 @@
 	 	dataSource : java에서 Connection Pool을 지원하기 위한 인터페이스
 	 	destroy-method="close" : 주어진 세션을 자동으로 반환하는 설정
 	 -->
-	<bean class="org.apache.commons.dbcp.BasicDataSource" id ="dataSource" destroy-method="close">
+	<bean class="org.apache.commons.dbcp.BasicDataSource" id ="realDataSource" destroy-method="close">
 	<!-- bean : 스프링 프레임워크를 통해 뒤에오는 class 객체를 생성하겠다는 의미 -->
 		
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
@@ -35,6 +35,21 @@
 		<property name="maxWait" value="-1"/><!-- 예외 발생전 커넥션이 반환될때까지 대기하는 시간, -1 : 무기한(기본값임) -->
 		
 	
+	</bean>
+	
+	<!-- 
+		log4j를 이용한 SQL로그 출력용 bean생성
+		
+		* realDataSource이용해서 SQL수행내용, 수행결과를 출력하는 역할
+	 -->
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="realDataSource"/>
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE"/>
+				<property name="sqlPrefix" value="[SQL]"/>
+			</bean>
+		</property>
 	</bean>
 		
 	<!--
@@ -103,6 +118,23 @@
 	  </bean>
 	 
 <!-- DB 연결 관련 끝 -->
+	 
+	 <!-- 파일 등록용 -->
+	 <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+
+	 	<!-- defaultEncodeing : 업로드 되는 파일에 대한 인코딩 처리 여부 -->
+		<property name="defaultEncoding" value="UTF-8"/>
+		
+		<!-- maxUploadSize : 한번에 전체 업로드 되는 파일의 총 용량 설정 -->
+		 <property name="maxUploadSize" value="10000000" /><!-- 10mbyte -->
+		
+		 <!-- maxInMemorySize : 디스크에 임시파일을 생성하기 전에 메모리에 보관할 수 있는 최대바이트 크기 -->
+		<property name="maxInMemorySize" value="10000000" /> <!-- 10mbyte -->
+		
+	 </bean>
+	 
+	 
+	 
 	 
 		
 </beans>
