@@ -44,4 +44,10 @@ public class MemberServiceImpl implements MemberService {
 		return list;
 	}
 
+	@Override
+	public void updateMemberChangePwd() {
+		memberDao.updateMemberChangePwd();
+		
+	}
+
 }

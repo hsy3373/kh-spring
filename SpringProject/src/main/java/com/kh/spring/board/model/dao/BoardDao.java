@@ -85,7 +85,9 @@ public class BoardDao {
 		return sqlSession.delete("boardMapper.deleteBoardImage", map);
 	}
 	
-	
+	public ArrayList<String> selectBoardImgList() {
+		return (ArrayList) sqlSession.selectList("boardMapper.selectBoardImgList");
+	}
 	
 }
 

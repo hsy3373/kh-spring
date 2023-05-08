@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
-import com.kh.spring.main.ExceptionController;
 import com.kh.spring.member.model.service.MemberService;
 import com.kh.spring.member.model.service.MemberServiceImpl;
 import com.kh.spring.member.model.vo.Member;
@@ -34,8 +36,9 @@ import com.kh.spring.member.model.vo.Member;
 
 // 로그인, 회원가입기능 완료 후 실행될 코드
 @SessionAttributes({"loginUser"})
-public class MemberController {
-
+public class MemberController extends QuartzJobBean{
+							// 보통 컨트롤러에 extends를 하지 않는데 이건 실험용으로 한것임
+	
 	private MemberService ms = new MemberServiceImpl();
 	// 기존 객체 생성방식. 서비스가 동시에 많은 횟수의 요청이 들어오면 그만큼의 객체가 생성되게 됨
 	// 객체간의 결합도가 올라감 -> MemberController가 생성되면 그만큼 ms 객체도 생성이 되는걸 결합도라고 함
@@ -439,13 +442,33 @@ public class MemberController {
 	
 	@Scheduled(fixedDelay = 1000)
 	public void test() {
-		System.out.println("1초마다 출력하기 " + count++);
+		//System.out.println("1초마다 출력하기 " + count++);
 	}
 	
 	
 	// crontab방식
 	public void testCron() {
-		System.out.println("크론 테스트");
+		//System.out.println("크론 테스트");
+	}
+
+	public void testQuartz() {
+		System.out.println("콰츠 테스트");
+	}
+	
+	
+
+	/*
+	 * 회원정보 확인 스케쥴러
+	 * 
+	 * 매일 오전 1시에 모든 사용자의 정보를 검색하여 사용자가 비밀번호를 안바꾼지 3개월이 지났다면
+	 * Member테이블의 changePwd의 값을 Y로 변경
+	 * 
+	 * 로그인할때 changePwd의 값이 Y라면 비밀번호 변경페이지로 이동(이건 안할예정)
+	 * */
+	
+	@Override
+	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+		memberService.updateMemberChangePwd();
 	}
 	
 	

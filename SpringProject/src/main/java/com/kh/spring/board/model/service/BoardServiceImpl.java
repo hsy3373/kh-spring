@@ -203,6 +203,11 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
+	@Override
+	public ArrayList<String> selectBoardImgList() {
+		return boardDao.selectBoardImgList();
+	}
+
 	
 	
 	

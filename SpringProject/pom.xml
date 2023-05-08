@@ -306,7 +306,7 @@
 		</dependency>
 		
 		
-		<!--  Spring quartz  -->
+		<!--  Spring quartz - 좀더 복잡한 스케쥴러용 좀더 많이 이용됨  -->
 		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
 		<dependency>
 		    <groupId>org.quartz-scheduler</groupId>
@@ -320,6 +320,31 @@
 		    <artifactId>quartz-jobs</artifactId>
 		    <version>2.3.2</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		<!--  Spring quartz - 끝  -->
+		
+		<!-- AOP관련 -->
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+		<!-- AOP관련 끝 -->
+		
+		
 		
 		
 		  

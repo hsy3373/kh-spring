@@ -34,8 +34,13 @@
 		<result column="USER_NO" property="userNo"/>
 		<result column="PROFILE_IMG" property="profileImage"/>
 		
-		<collection property="imgList" javaType="java.util.ArrayList" 
-		ofType="boardImg" select="selectImgList" column="BOARD_NO"/>
+		<!-- 방법1 -->
+		<!-- <collection property="imgList" javaType="java.util.ArrayList" 
+		ofType="boardImg" select="selectImgList" column="BOARD_NO"/> -->
+		
+		<!-- 방법2 -->
+		<collection property="imgList" resultMap="boardImgResultSet"/> 
+		
 		<!-- 
 			selectImgList의 조회결과를 Board VO클래스의 imgList필드에 담겠다라는 의미
 			-> imgList에 담기위한 ArrayList<BoardImg>객체를 생성하겠다
@@ -147,10 +152,11 @@
   <select id="selectBoardDetail" resultMap="boardDetailResultSet">
   	SELECT BOARD_NO, BOARD_TITLE, BOARD_WRITER, NICK_NAME, COUNT, 
   			TO_CHAR(CREATE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') CREATE_DATE,
-  			BOARD_CONTENT
+  			BOARD_CONTENT,
+  			BI.*
   	FROM BOARD B
   	JOIN MEMBER M ON M.USER_NO = B.BOARD_WRITER
-  	<!-- LEFT JOIN BOARD_IMG BI ON B.BOARD_NO = BI.REF_BNO -->
+  	LEFT JOIN BOARD_IMG BI ON B.BOARD_NO = BI.REF_BNO
   	WHERE B.BOARD_NO = #{boardNo} 
   			AND B.STATUS = 'Y'
   </select>
@@ -230,7 +236,10 @@
   </delete>
   
   
-  
+  <select id="selectBoardImgList" resultType="string">
+	  SELECT CHANGE_NAME
+	  FROM BOARD_IMG
+  </select>
   
   
   
