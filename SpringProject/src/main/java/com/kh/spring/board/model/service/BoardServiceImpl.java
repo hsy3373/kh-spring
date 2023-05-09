@@ -54,6 +54,11 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Board selectBoardDetail(int boardNo) {
+		
+//		if(true) {
+//			throw new RuntimeException("예외발생");
+//		}
+		
 		return  boardDao.selectBoardDetail(boardNo);
 	}
 
