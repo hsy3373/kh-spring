@@ -464,6 +464,8 @@ public class MemberController extends QuartzJobBean{
 	 * Member테이블의 changePwd의 값을 Y로 변경
 	 * 
 	 * 로그인할때 changePwd의 값이 Y라면 비밀번호 변경페이지로 이동(이건 안할예정)
+	 * 
+	 * 오버라이드 한 애들 안에꺼를 쓸때는 자동으로 세터가 호출되는듯
 	 * */
 	
 	@Override

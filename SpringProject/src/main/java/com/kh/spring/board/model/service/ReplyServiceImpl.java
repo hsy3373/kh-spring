@@ -24,6 +24,16 @@ public class ReplyServiceImpl implements ReplyService{
 		return dao.selectReplyList(bno);
 	}
 
+	@Override
+	public int deleteReply(int replyNo) {
+		return dao.deleteReply(replyNo);
+	}
+
+	@Override
+	public int updateReply(Reply reply) {
+		return dao.updateReply(reply);
+	}
+
 		
 	
 }

@@ -27,9 +27,22 @@
 	</insert>
 	
 	<select id="selectReplyList" resultType="reply" parameterType="_int">
+<!-- 		SELECT  REPLY_NO,
+				REPLY_CONTENT, 
+				REF_BNO,
+				R.REPLY_WRITER AS USER_NO,
+				NICK_NAME AS REPLY_WRITER,
+				R.CREATE_DATE,
+				R.STATUS
+		FROM REPLY R
+		JOIN MEMBER M ON R.REPLY_WRITER = M.USER_NO
+		WHERE REF_BNO = #{ bno }
+			AND R.STATUS = 'Y' -->
 		SELECT  REPLY_NO,
 				REPLY_CONTENT, 
 				REF_BNO,
+                PARENT_REPLY_NO,
+				R.REPLY_WRITER AS USER_NO,
 				NICK_NAME AS REPLY_WRITER,
 				R.CREATE_DATE,
 				R.STATUS
@@ -37,6 +50,47 @@
 		JOIN MEMBER M ON R.REPLY_WRITER = M.USER_NO
 		WHERE REF_BNO = #{ bno }
 			AND R.STATUS = 'Y'
+        START WITH PARENT_REPLY_NO IS NULL
+        CONNECT BY PRIOR REPLY_NO = PARENT_REPLY_NO
+        ORDER SIBLINGS BY REPLY_NO
 	</select>
+	
+	<!-- 
+         계층형 쿼리 (START WITH , CONNECT BY, ORDER SIBLINGS BY)
+        - 상위 타입과 하위 타입간의 관계를 계층식으로 표현할 수 있게 하는 SELECT문법
+        - START WITH : 상위타입(최상위 부모)으로 사용할 행을 지정(서브쿼리로도 작성가능)
+        - CONNECT BY => 상위타입과 하위타입의 관계를 규정
+                    => PRIOR(이전) 연산자와 같이 사용하여 현재 행 이전에 상위타입 또는 하위타입이 있을지 규정
+                    
+                    1) 부모 -> 자식 계층구조
+                    CONNECT BY PRIOR 자식컬럼 = 부모컬럼
+                    
+                    2) CONNECT BY PRIOR 부모컬럼 = 자식컬럼
+                    
+        - ORDER SIBLINGS BY  : 계층 구조를 정렬시켜주는 구문(계층구조에서만 사용가능)
+        
+        
+        ** 계층형 쿼리가 적용된 SELECT문 해석 순서 **
+        
+      5  SELECT
+      1  FROM(+JOIN)
+      4  WHERE
+      2  START WITH
+      3  CONNECT BY
+      6  ORDER SIBLINGS BY
+	 -->
+	
+	
+	<update id="deleteReply" parameterType="_int">
+		UPDATE REPLY
+		SET STATUS = 'N'
+		WHERE REPLY_NO = #{replyNo}
+	</update>
+	
+	<update id="updateReply" parameterType="reply">
+		UPDATE REPLY
+		SET REPLY_CONTENT = #{replyContent}
+		WHERE REPLY_NO = #{replyNo}
+	</update>
 
 </mapper>

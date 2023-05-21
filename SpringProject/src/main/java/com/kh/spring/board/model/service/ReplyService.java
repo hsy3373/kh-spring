@@ -14,7 +14,9 @@ public interface ReplyService {
 	
 	
 	// 댓글 삭제
+	int deleteReply(int replyNo);
+	
 	
 	// 댓글 수정
-
+	int updateReply(Reply reply);
 }
